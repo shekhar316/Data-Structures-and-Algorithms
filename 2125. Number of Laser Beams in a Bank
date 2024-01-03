@@ -1,0 +1,42 @@
+# 2125. Number of Laser Beams in a Bank
+
+> https://leetcode.com/problems/number-of-laser-beams-in-a-bank/description/
+
+## Solution 
+
+```java
+class Solution {
+    public int numberOfBeams(String[] bank) {
+        int rows = bank.length;
+        int totalBeams = 0;
+
+        for(int i = 0; i < rows -1; i++){
+            int devicesInCurrRow = countDevices(bank[i]);
+            int nextRow = i + 1;
+   
+            while(nextRow < rows && countDevices(bank[nextRow]) == 0){
+                nextRow++;
+            }
+            if(nextRow < rows){
+                int devicesInNxtRow = countDevices(bank[nextRow]);
+                totalBeams += devicesInCurrRow * devicesInNxtRow;
+                i = nextRow - 1;
+            }
+
+        }
+
+        return totalBeams;
+    }
+
+    public static int countDevices(String row){
+        int totalDevices = 0;
+        int len = row.length();
+        for(int i = 0; i < len; i++){
+            if(row.charAt(i) == '1'){
+                totalDevices++;
+            }
+        }
+        return totalDevices;
+    }
+}
+```
